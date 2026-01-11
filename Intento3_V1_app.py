@@ -14,16 +14,25 @@ from Intento3_V1_Gestor_IA import generar_analisis_gemini
 # Configuración de página
 st.set_page_config(page_title="Herramienta TFM", layout="wide")
 
+
+
 # --- SIDEBAR: CONFIGURACIÓN ---
 with st.sidebar:
     st.header("⚙️ Configuración")
-    # Input seguro para la API Key
-    gemini_api_key = st.text_input("Google Gemini API Key", type="password")
-    if not gemini_api_key:
-        st.warning("⚠️ Introduce tu API Key para activar la IA.")
+    
+    # INTENTO DE CARGA AUTOMÁTICA (SECRETS)
+    try:
+        # Intenta leer desde los "Secrets" de Streamlit Cloud
+        gemini_api_key = st.secrets["GEMINI_API_KEY"]
+        st.success("✅ API Key cargada desde el sistema seguro.")
+    except:
+        # Si falla (ej. estás en local sin secrets.toml), la pide manual o usa una vacía
+        gemini_api_key = st.text_input("Google Gemini API Key", type="password")
+        if not gemini_api_key:
+            st.warning("⚠️ Introduce tu API Key para activar la IA.")
     
     st.divider()
-
+    
 # --- TÍTULO PRINCIPAL ---
 st.title("📊 Análisis Fundamental Automatizado (Quality Value)")
 
@@ -495,4 +504,5 @@ if st.button("🚀 Ejecutar Análisis"):
                 st.info("ℹ️ Ninguna de las empresas analizadas ha recibido una calificación de COMPRA, por lo que no hay detalles que mostrar.")
 
     else:
+
         st.info("No hay resultados para mostrar en el resumen.")
