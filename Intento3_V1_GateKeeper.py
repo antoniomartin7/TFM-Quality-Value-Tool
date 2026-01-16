@@ -150,10 +150,16 @@ def ejecutar_gatekeeper(datos_reales, referencias_historicas):
         resultados['decision'] = "NEUTRAL/PRECAUCIÓN" # Es buena, pero tiene alguna "pega"
         resultados['color_logico'] = "orange"
         resultados['motivo_principal'] = "Valoración neutral o con riesgos moderados (ver alertas)."
+
+    elif num_alertas_criticas == 0 and num_alertas <= 3 and num_puntos_fuertes >= 4:
+        resultados['decision'] = "NEUTRAL/PRECAUCIÓN" # Es buena, pero tiene alguna "pega"
+        resultados['color_logico'] = "orange"
+        resultados['motivo_principal'] = "Valoración neutral o con riesgos moderados (ver alertas)."
         
     else:
         resultados['decision'] = "DESCARTAR"
         resultados['color_logico'] = "red"
         resultados['motivo_principal'] = "Empresa sobrevalorada y/o acumulación excesiva de riesgos."
         
+
     return resultados
